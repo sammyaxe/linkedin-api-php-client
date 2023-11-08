@@ -12,7 +12,7 @@
 Установка делается через composer следующей командой
 
 ```bash
-composer require zoonman/linkedin-api-php-client
+composer require sammyaxe/linkedin-api-php-client
 ```
 
 Также можно добавить `composer.json`.
