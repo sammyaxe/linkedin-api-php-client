@@ -455,18 +455,23 @@ class Client
     {
         $url = $this->getOAuthApiRoot();
         $scheme = parse_url($url, PHP_URL_SCHEME);
-        $authority = parse_url($url, PHP_URL_HOST);
+        $host = parse_url($url, PHP_URL_HOST);
+        $port = parse_url($url, PHP_URL_PORT);
+        $userInfo = parse_url($url, PHP_URL_USER).":".parse_url($url, PHP_URL_PASS);
         $path = parse_url($url, PHP_URL_PATH);
         $path .= trim($endpoint, '/');
         $fragment = '';
-        $uri = Uri::composeComponents(
-            $scheme,
-            $authority,
-            $path,
-            build_query($params),
-            $fragment
-        );
-        return $uri;
+
+        $uri = (new GuzzleHttp\Psr7\Uri(''))
+            ->withScheme($scheme)
+            ->withUserInfo($userInfo)
+            ->withHost($host)
+            ->withPort($port)
+            ->withPath($path)
+            ->withQuery(http_build_query($params, '', '&'))
+            ->withFragment($fragment);
+
+        return (string)$uri;
     }
 
     /**
