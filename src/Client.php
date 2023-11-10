@@ -122,18 +122,14 @@ class Client
         return $this;
     }
 
-    public string $version = '202310';
+    public string $apiVersion = '202310';
 
-    /**
+     /**
      * List of default headers
      *
      * @var array
      */
-    protected $apiHeaders = [
-        'Content-Type' => 'application/json',
-        'x-li-format' => 'json',
-        'LinkedIn-Version' => $this->apiVersion,
-    ];
+    protected array $apiHeaders;
 
     /**
      * Get list of headers
@@ -212,6 +208,13 @@ class Client
      */
     public function __construct($clientId = '', $clientSecret = '')
     {
+
+         $this->apiHeaders = [
+            'Content-Type' => 'application/json',
+            'x-li-format' => 'json',
+            'LinkedIn-Version' => $this->apiVersion,
+        ];
+        
         !empty($clientId) && $this->setClientId($clientId);
         !empty($clientSecret) && $this->setClientSecret($clientSecret);
     }
